@@ -1,0 +1,21 @@
+[package]
+name = "sonm"
+version = "0.1.0"
+authors = ["Evgeny Safronov <division494@gmail.com>"]
+
+[dependencies]
+base64 = "0.9"
+ethereum-types = "*"
+openssl = "0.10"
+secp256k1 = "0.8"
+tiny-keccak = "*"
+rust-crypto = "0.2"
+
+futures = "*"
+hyper = "*"
+hyper-tls = "*"
+tokio-core = "*"
+serde = "1"
+serde_derive = "1"
+serde_json = "1"
+rustc-hex = "1.0"
