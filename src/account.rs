@@ -1,3 +1,7 @@
+use std::fs::File;
+use std::io::{self, Read};
+use std::path::Path;
+
 use crypto::aessafe::AesSafe128Encryptor;
 use crypto::blockmodes::CtrMode;
 use crypto::buffer::{RefReadBuffer, RefWriteBuffer};
@@ -6,9 +10,6 @@ use crypto::symmetriccipher::Decryptor;
 use hex::{FromHex, FromHexError};
 use json;
 use keccak::Keccak;
-use std::fs::File;
-use std::io::{self, Read};
-use std::path::Path;
 
 #[derive(Debug)]
 pub enum Error {
