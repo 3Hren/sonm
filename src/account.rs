@@ -14,10 +14,14 @@ use secp256k1::{self, Secp256k1, SecretKey};
 #[derive(Debug)]
 pub enum Error {
     Io(io::Error),
+    /// Error that is returned when failed to deserialize the account from JSON.
     Json(json::Error),
     FromHexError(FromHexError),
     InvalidCipher(String),
     InvalidPassphrase,
+    /// Unknown account version.
+    ///
+    /// The linked id contains actual version number.
     InvalidVersion(i32),
     Secp256k1(secp256k1::Error),
     CipherError(SymmetricCipherError),
@@ -76,11 +80,17 @@ struct CipherParams {
 
 #[derive(Clone, Debug, Deserialize)]
 struct Crypto {
+    /// The name of a symmetric AES algorithm.
     cipher: String,
+    /// Your Ethereum private key encrypted using the "cipher" algorithm above.
     ciphertext: String,
+    /// The parameters required for the "cipher" algorithm above.
     cipherparams: CipherParams,
+    /// A Key Derivation Function used to let you encrypt your keystore file with a password.
     kdf: String,
+    /// The parameters required for the "kdf" algorithm above.
     kdfparams: KDFParams,
+    /// A code used to verify your password.
     mac: String,
 }
 
