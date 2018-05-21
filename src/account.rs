@@ -1,5 +1,6 @@
 use std::io::{self, Read};
 
+use crypto::symmetriccipher::SymmetricCipherError;
 use crypto::aessafe::AesSafe128Encryptor;
 use crypto::blockmodes::CtrMode;
 use crypto::buffer::{RefReadBuffer, RefWriteBuffer};
@@ -19,6 +20,7 @@ pub enum Error {
     InvalidPassphrase,
     InvalidVersion(i32),
     Secp256k1(secp256k1::Error),
+    CipherError(SymmetricCipherError),
 }
 
 impl From<io::Error> for Error {
@@ -42,6 +44,12 @@ impl From<FromHexError> for Error {
 impl From<secp256k1::Error> for Error {
     fn from(err: secp256k1::Error) -> Self {
         Error::Secp256k1(err)
+    }
+}
+
+impl From<SymmetricCipherError> for Error {
+    fn from(err: SymmetricCipherError) -> Self {
+        Error::CipherError(err)
     }
 }
 
@@ -128,7 +136,7 @@ fn decrypt_v3(crypto: &Crypto, password: &str) -> Result<Vec<u8>, Error> {
                 let iv = crypto.cipherparams.iv.from_hex()?;
                 let mut buf = vec![0u8; ciphertext.len()];
                 let mut encrypt = CtrMode::new(AesSafe128Encryptor::new(&derived_key[..16]), iv.to_vec());
-                encrypt.decrypt(&mut RefReadBuffer::new(&ciphertext), &mut RefWriteBuffer::new(&mut buf), true).unwrap();
+                encrypt.decrypt(&mut RefReadBuffer::new(&ciphertext), &mut RefWriteBuffer::new(&mut buf), true)?;
 
                 Ok(buf)
             } else {
