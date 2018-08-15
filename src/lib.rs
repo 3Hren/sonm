@@ -1,4 +1,4 @@
-#![feature(use_extern_macros, try_from)]
+#![feature(use_extern_macros, try_from, extern_prelude)]
 #![feature(generators, generator_trait)]
 
 extern crate actix_web;

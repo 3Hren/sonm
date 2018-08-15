@@ -22,3 +22,4 @@ actix-web = "0.7"
 
 num-bigint = "0.2"
 num-traits = "0.2"
+clap = "2"
