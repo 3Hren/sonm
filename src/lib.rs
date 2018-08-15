@@ -13,7 +13,6 @@ extern crate serde_derive;
 extern crate serde_json as json;
 extern crate tiny_keccak as keccak;
 extern crate rustc_hex as hex;
-extern crate rand;
 extern crate num_bigint;
 extern crate num_traits;
 
