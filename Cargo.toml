@@ -2,6 +2,8 @@
 name = "sonm"
 version = "0.1.0"
 authors = ["Evgeny Safronov <division494@gmail.com>"]
+license = "MIT"
+description = "Rust SONM API"
 
 [dependencies]
 base64 = "0.9"
